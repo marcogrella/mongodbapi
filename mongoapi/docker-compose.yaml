@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  mongodb:
+    image: library/mongo:5.0.3
+    container_name: mongodb
+    ports:
+        - 27017:27017
+    volumes:
+        - data:/data
+    environment:
+        - MONGO_INITDB_ROOT_USERNAME=root
+        - MONGO_INITDB_ROOT_PASSWORD=admin
+
+volumes:
+  data: {}
+
+
