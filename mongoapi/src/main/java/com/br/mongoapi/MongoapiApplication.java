@@ -8,6 +8,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -22,8 +25,9 @@ public class MongoapiApplication {
 		SpringApplication.run(MongoapiApplication.class, args);
 	}
 
+	/*
 	@Bean
-	CommandLineRunner runner(StudentRepository repository){
+	CommandLineRunner runner(StudentRepository repository, MongoTemplate template){
 		return args -> {
 			Address address = new Address("Brazil", "São Paulo", "02936030");
 			Student student = new Student("Marco",
@@ -33,8 +37,28 @@ public class MongoapiApplication {
 					List.of("Computer Science", "Maths"),
 					BigDecimal.TEN,
 					LocalDateTime.now());
-			repository.save(student);
+
+			String email = "marco.grella@gmail.com";
+
+			Query query = new Query();
+			query.addCriteria(Criteria.where("email").is(email));
+
+			List<Student> students = template.find(query, Student.class);
+
+			if(students.size() > 1){
+				throw new IllegalStateException("Found many students with same " + email);
+			}
+
+			if(students.isEmpty()){
+				System.out.println("Inserting student " + student);
+				repository.insert(student);
+			} else{
+				System.out.println(student + " already exists");
+			}
+
 		};
 	}
+
+	 */
 
 }
