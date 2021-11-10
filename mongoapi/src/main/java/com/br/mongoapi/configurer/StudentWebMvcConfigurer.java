@@ -8,10 +8,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
-/* Configurer */
+/* Configurer to Pagination method listAll in order to give first page (0) and results size 3. */
+/* To customize search:  localhost:8080/student/allpagination?size=5&page=2 */
+
 
 @Configuration
-public class StutentWebMvcConfigurer implements WebMvcConfigurer {
+public class StudentWebMvcConfigurer implements WebMvcConfigurer {
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {

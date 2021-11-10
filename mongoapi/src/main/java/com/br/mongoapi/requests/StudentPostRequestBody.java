@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 
@@ -20,24 +21,30 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentRequestBody implements Serializable{
+public class StudentPostRequestBody implements Serializable{
 
     private static final long serialVersionUID = -4040516302734722943L;
 
     @NotEmpty(message = "field FIRST NAME is mandatory")
+    @Length(max = 40, message = "field FIRST NAME is too long. Maximum range is 40 characters.")
     private String firstName;
+    @Length(max = 40, message = "field LAST NAME is too long. Maximum range is 40 characters.")
     @NotEmpty(message = "field LAST NAME is mandatory")
     private String lastName;
     @Indexed(unique = true)
     @Email(message = "field EMAIL is not a valid email.")
+    @Length(max = 40, message = "field EMAIL is too long. Maximum range is 40 characters.")
     private String email;
     @NotNull(message = "field GENDER cannot be null.")
     private Gender gender;
     @Valid
     private Address address;
     @NotEmpty(message = "The favorite book themes can not be empty")
-    private List<@NotBlank(message = "field theme cannot be null or empty.") String> favoriteBookThemes;
+    private List<
+            @Length(max = 40, message = "field FAVORITE BOOK THEMES is too long. Maximum range is 40 characters.")
+            @NotBlank(message = "field theme cannot be null or empty.") String> favoriteBookThemes;
     @PositiveOrZero(message = "Please insert a valid value for field TOTAL SPENT IN BOOKS.")
+    @Max(value = 1000000000, message = "field TOTAL SPENT IN BOOKS cannot be too long.")
     @NotNull(message = "field TOTAL SPENT IN BOOKS can not be null.")
     private BigDecimal totalSpentInBooks;
     private LocalDateTime created;

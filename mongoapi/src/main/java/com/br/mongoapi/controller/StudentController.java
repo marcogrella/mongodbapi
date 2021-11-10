@@ -2,14 +2,18 @@ package com.br.mongoapi.controller;
 
 import com.br.mongoapi.model.Student;
 import com.br.mongoapi.repository.StudentRepository;
+import com.br.mongoapi.requests.StudentPostRequestBody;
+import com.br.mongoapi.requests.StudentPutRequestBody;
 import com.br.mongoapi.service.StudentService;
 import lombok.AllArgsConstructor;
+import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 
 @RestController
@@ -20,23 +24,32 @@ public class StudentController {
     StudentService service;
     StudentRepository repository;
 
-    @GetMapping("/all")
-    public List<Student> findAllUsers(){
-        return service.findAll();
+
+    @GetMapping("/allpagination")
+    public ResponseEntity<Page<Student>> findAllPagination(@ParameterObject Pageable peageable){
+        return ResponseEntity.ok(service.findAllPagination(peageable));
     }
 
     @GetMapping("/byEmail/{email}")
     public ResponseEntity<Student> findStudentByEmail(@PathVariable String email) {
-        return ResponseEntity.ok(service.findByEmailThrowBadRequestException(email));
+        return ResponseEntity.ok(service.findByEmailOrThrowBadRequestException(email));
     }
-
 
     @PostMapping("/new")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Student> saveStudent(@RequestBody @Valid Student student) {
-        return new ResponseEntity<>(service.save(student), HttpStatus.CREATED);
+    public ResponseEntity<Student> saveStudent(@RequestBody @Valid StudentPostRequestBody studentPostRequestBody) {
+        return new ResponseEntity<>(service.save(studentPostRequestBody), HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/deletebyemail/{email}")
+    public ResponseEntity<Void> deleteStudent(@PathVariable String email) {
+        service.delete(email);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
+    @PutMapping("/update")
+    public ResponseEntity<Void> updateStudent(@RequestBody @Valid StudentPutRequestBody studentPutRequestBody){
+        service.replace(studentPutRequestBody);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
 }

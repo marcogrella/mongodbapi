@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ErrorsInfo {
+public class ErrorInfo {
 
     private String field;
     private String fieldMessage;

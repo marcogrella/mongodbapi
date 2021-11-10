@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,10 +17,10 @@ public class HttpResponseBinding {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss", timezone ="America/Sao_Paulo")
     private Date timestamp;
     private int httpStatusCode;
-    private HttpStatus httpStatus; /* classe Spring contém código e frase */
+    private HttpStatus httpStatus;
     private String reason;
     private String defaultMessage;
-    private String fields;
-    private String fieldsMessage;
+    List<ErrorInfo> message;
+
 
 }
