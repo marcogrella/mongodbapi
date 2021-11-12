@@ -17,6 +17,7 @@ import java.util.List;
 @Data
 @Document
 @Builder
+@AllArgsConstructor
 public class Student implements Serializable {
 
     private static final long serialVersionUID = 2763083176353200618L;

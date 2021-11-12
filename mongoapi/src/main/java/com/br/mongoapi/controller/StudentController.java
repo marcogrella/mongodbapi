@@ -6,6 +6,7 @@ import com.br.mongoapi.requests.StudentPostRequestBody;
 import com.br.mongoapi.requests.StudentPutRequestBody;
 import com.br.mongoapi.service.StudentService;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(value = "/student")
 @AllArgsConstructor
+@Log4j2
 public class StudentController {
 
     StudentService service;
@@ -30,7 +32,7 @@ public class StudentController {
         return ResponseEntity.ok(service.findAllPagination(peageable));
     }
 
-    @GetMapping("/byEmail/{email}")
+    @GetMapping("/byemail/{email}")
     public ResponseEntity<Student> findStudentByEmail(@PathVariable String email) {
         return ResponseEntity.ok(service.findByEmailOrThrowBadRequestException(email));
     }
@@ -51,5 +53,4 @@ public class StudentController {
         service.replace(studentPutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 }

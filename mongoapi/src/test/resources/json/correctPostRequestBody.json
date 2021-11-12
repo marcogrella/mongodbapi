@@ -1,0 +1,17 @@
+{
+  "firstName": "Carlos",
+  "lastName": "Nogueira",
+  "email": "carlos.nogueira@gmail.com.br",
+  "gender": "MALE",
+  "address": {
+    "country": "Brazil",
+    "city": "Caieiras",
+    "postCode": "12345678"
+  },
+  "favoriteBookThemes": [
+    "Java",
+    "Python",
+    "Computer Science"
+  ],
+  "totalSpentInBooks": 180
+}

@@ -11,4 +11,5 @@ public abstract class StudentMapper {
     public static final StudentMapper INSTANCE = Mappers.getMapper(StudentMapper.class);
     public abstract Student toStudent(StudentPostRequestBody studentPostRequestBody);
     public abstract Student toStudent(StudentPutRequestBody studentPutRequestBody);
+
 }

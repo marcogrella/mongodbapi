@@ -2,7 +2,11 @@ package com.br.mongoapi.util;
 
 import com.br.mongoapi.requests.StudentPostRequestBody;
 
-public class StudentPostRequestBodyCreator {
+import java.io.Serializable;
+
+public class StudentPostRequestBodyCreator implements Serializable {
+
+    private static final long serialVersionUID = -2229229167137409804L;
 
     public static StudentPostRequestBody createStudentPostRequestBody(){
         return StudentPostRequestBody.builder()

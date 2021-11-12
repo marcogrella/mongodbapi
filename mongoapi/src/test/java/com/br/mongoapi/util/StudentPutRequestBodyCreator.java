@@ -2,7 +2,9 @@ package com.br.mongoapi.util;
 
 import com.br.mongoapi.requests.StudentPutRequestBody;
 
-public class StudentPutRequestBodyCreator {
+import java.io.Serializable;
+
+public class StudentPutRequestBodyCreator implements Serializable {
 
     public static StudentPutRequestBody createStudentPutRequestBody(){
         return StudentPutRequestBody.builder()

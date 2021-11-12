@@ -4,13 +4,13 @@ import com.br.mongoapi.model.Address;
 import com.br.mongoapi.model.Gender;
 import com.br.mongoapi.model.Student;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StudentCreator {
-
 
     public static Student createStudentToBeSaved(){
 

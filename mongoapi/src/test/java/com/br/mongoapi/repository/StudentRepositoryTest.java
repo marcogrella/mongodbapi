@@ -1,14 +1,8 @@
 package com.br.mongoapi.repository;
 
-import com.br.mongoapi.exception.BadRequestException;
-import com.br.mongoapi.mapper.StudentMapper;
-import com.br.mongoapi.model.Address;
-import com.br.mongoapi.model.Gender;
 import com.br.mongoapi.model.Student;
 import com.br.mongoapi.util.StudentCreator;
-import org.apache.tomcat.jni.Local;
 import org.assertj.core.api.Assertions;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,22 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureDataMongo
+@TestPropertySource("/application-test.properties")
 class StudentRepositoryTest {
 
     /* for tests a database mongoapitest was created */
@@ -42,6 +29,7 @@ class StudentRepositoryTest {
 
     @BeforeEach
     void cleanCollection(){
+
         this.repository.deleteAll();
     }
 
@@ -91,7 +79,6 @@ class StudentRepositoryTest {
 
         Assertions.assertThat(optionalStudent.isEmpty()).isTrue();
 
-
     }
 
 
@@ -113,9 +100,7 @@ class StudentRepositoryTest {
     @Test
     @DisplayName("Shoud throw a DuplicateKeyException when try to save a Student with same email that belongs to another one")
     void save_ThrowDuplicateKeyException_WhenEmailAlreadyTaken() {
-        Student studentToBeSaved = StudentCreator.createStudentToBeSaved();
-        Student savedStudent = repository.save(studentToBeSaved);
-
+        repository.save(StudentCreator.createStudentToBeSaved());
         Assertions.assertThatExceptionOfType(DuplicateKeyException.class)
                 .isThrownBy(() -> this.repository.save( StudentCreator.createStudentToBeSaved()));
 

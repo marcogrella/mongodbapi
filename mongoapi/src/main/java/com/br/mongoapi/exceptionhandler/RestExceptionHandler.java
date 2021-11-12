@@ -1,7 +1,9 @@
 package com.br.mongoapi.exceptionhandler;
 
+import com.br.mongoapi.constant.UserApiRoles;
 import com.br.mongoapi.exception.BadRequestException;
 import com.br.mongoapi.exception.EmailExistsException;
+import com.br.mongoapi.exception.UsernameExistsException;
 import com.br.mongoapi.exception.util.ErrorInfo;
 import com.br.mongoapi.exception.util.HttpResponse;
 import com.br.mongoapi.exception.util.HttpResponseBinding;
@@ -9,7 +11,6 @@ import com.br.mongoapi.model.Gender;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -31,6 +32,12 @@ public class RestExceptionHandler {
     public ResponseEntity<HttpResponse> handleBadRequestException(BadRequestException bre) {
         return createHttpResponse(HttpStatus.BAD_REQUEST, bre.getMessage());
     }
+
+    @ExceptionHandler(UsernameExistsException.class)
+    public ResponseEntity<HttpResponse> handleUsernameExistsException(UsernameExistsException ue) {
+        return createHttpResponse(HttpStatus.BAD_REQUEST, ue.getMessage());
+    }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<HttpResponseBinding> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
@@ -60,6 +67,14 @@ public class RestExceptionHandler {
             errorsInfo.setFieldMessage(e.getValue() + " is not valid for GENDER field (insert MALE or FEMALE)" );
             errorInfoList.add(errorsInfo);
         }
+
+        if(e.getTargetType().isAssignableFrom(UserApiRoles.class)){
+            ErrorInfo errorsInfo = new ErrorInfo();
+            errorsInfo.setField("Authorities");
+            errorsInfo.setFieldMessage(e.getValue() + " is not valid for Authorities field (insert ROLE_USER, ROLE_ADMIN or ROLE_SUPER_ADMIN)" );
+            errorInfoList.add(errorsInfo);
+        }
+
         return createHttpResponseWithBindingResults(HttpStatus.BAD_REQUEST, e.getMessage(), errorInfoList);
     }
 
