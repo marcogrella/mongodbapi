@@ -36,7 +36,7 @@ class UserApiRepositoryTest {
     @Test
     @DisplayName("Save a ApiUser when successful")
     void save_PersistsStudent_WhenSuccessful() {
-        ApiUser userToBeSaved = ApiUserCreator.createUserToBeSaved();
+        ApiUser userToBeSaved = ApiUserCreator.createApiUser();
         ApiUser savedUser = repository.save(userToBeSaved);
 
         Assertions.assertThat(savedUser).isNotNull();
@@ -53,7 +53,7 @@ class UserApiRepositoryTest {
     @Test
     @DisplayName("Update a student when successful")
     void update_PersistsStudent_WhenSuccessful() {
-        ApiUser userToBeSaved = ApiUserCreator.createUserToBeSaved();
+        ApiUser userToBeSaved = ApiUserCreator.createApiUser();
         ApiUser savedUser = repository.save(userToBeSaved);
 
         savedUser.setAuthorities(UserApiRoles.ROLE_SUPER_ADMIN);
@@ -72,7 +72,7 @@ class UserApiRepositoryTest {
     @Test
     @DisplayName("findByEmail finds an UserApi by email")
     void findByEmail_ThenReturnsUser_WhenSuccessful() {
-        ApiUser userToBeSaved = ApiUserCreator.createUserToBeSaved();
+        ApiUser userToBeSaved = ApiUserCreator.createApiUser();
         ApiUser savedUser = repository.save(userToBeSaved);
 
         String email = savedUser.getEmail();
@@ -86,7 +86,7 @@ class UserApiRepositoryTest {
     @Test
     @DisplayName("findByUsername an UserApi by username")
     void findByUsername_ThenReturnsUser_WhenSuccessful() {
-        ApiUser userToBeSaved = ApiUserCreator.createUserToBeSaved();
+        ApiUser userToBeSaved = ApiUserCreator.createApiUser();
         ApiUser savedUser = repository.save(userToBeSaved);
 
         String userName = savedUser.getUsername();
@@ -99,10 +99,10 @@ class UserApiRepositoryTest {
     @Test
     @DisplayName("Shoud throw a DuplicateKeyException when try to save an User with same email that belongs to another one")
     void save_ThrowDuplicateKeyException_WhenEmailAlreadyTaken() {
-        repository.save(ApiUserCreator.createUserToBeSaved());
+        repository.save(ApiUserCreator.createApiUser());
 
         Assertions.assertThatExceptionOfType(DuplicateKeyException.class)
-                .isThrownBy(() -> this.repository.save(ApiUserCreator.createUserToBeSaved()));
+                .isThrownBy(() -> this.repository.save(ApiUserCreator.createApiUser()));
 
 
     }

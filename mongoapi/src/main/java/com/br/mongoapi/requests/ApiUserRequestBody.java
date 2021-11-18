@@ -21,7 +21,6 @@ public class ApiUserRequestBody implements Serializable {
 
     private static final long serialVersionUID = -6634988844087344148L;
 
-
     @NotEmpty(message = "field USERNAME is mandatory")
     @Length(max = 40, message = "field USERNAME is too long. Maximum range is 40 characters.")
     private String username;

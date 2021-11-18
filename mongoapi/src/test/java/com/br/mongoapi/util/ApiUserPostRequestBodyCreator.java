@@ -1,20 +1,16 @@
 package com.br.mongoapi.util;
 
 import com.br.mongoapi.constant.UserApiRoles;
-import com.br.mongoapi.model.ApiUser;
+import com.br.mongoapi.requests.ApiUserRequestBody;
 
-public class ApiUserCreator {
+public class ApiUserPostRequestBodyCreator {
 
-    public static ApiUser createApiUser(){
-        return ApiUser.builder()
+    public static ApiUserRequestBody createApiUserPRB(){
+        return ApiUserRequestBody.builder()
                 .username("Jhon")
                 .email("john@email.com")
                 .authorities(UserApiRoles.ROLE_SUPER_ADMIN)
-                .password("$2a$10$e8M07KA0K03XwqP.smitgOET7hpw4I.XZJgt8Yb9/GeiigngRGAl6")
                 .build();
     }
-
-
-
 
 }

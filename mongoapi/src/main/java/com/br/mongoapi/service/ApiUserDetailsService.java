@@ -6,10 +6,12 @@ import com.br.mongoapi.mapper.ApiUserMapper;
 import com.br.mongoapi.repository.UserApiRepository;
 import com.br.mongoapi.requests.ApiUserRequestBody;
 import com.br.mongoapi.model.ApiUser;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,20 +22,18 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 
+@Transactional
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Log4j2
 public class ApiUserDetailsService implements UserDetailsService {
 
-    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     private final UserApiRepository userApiRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        ApiUser apiUser = userApiRepository.findByUsername(username);
-        log.info("User authorities: " + apiUser.getAuthorities());
         return Optional.ofNullable(userApiRepository.findByUsername(username))
                 .orElseThrow(() -> new UsernameNotFoundException("User not found!"));
     }
