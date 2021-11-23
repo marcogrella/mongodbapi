@@ -3,6 +3,7 @@ package com.br.mongoapi.controller;
 
 import com.br.mongoapi.requests.ApiUserRequestBody;
 import com.br.mongoapi.service.ApiUserDetailsService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,7 @@ public class UserApiController {
 
     @PostMapping("/register")
     @PreAuthorize("hasAuthority('ROLE_SUPER_ADMIN')")
+    @Operation(summary = "Register a new user that manages API endpoints")
     public ResponseEntity<String> registerApiUser(@RequestBody @Valid ApiUserRequestBody apiUserRequestBody) {
         userService.save(apiUserRequestBody);
         return new ResponseEntity<>("User was successful registered.", HttpStatus.OK);

@@ -17,7 +17,6 @@ public class StudentPostRequestBodyCreator implements Serializable {
                 .address(StudentCreator.createStudentToBeSaved().getAddress())
                 .favoriteBookThemes(StudentCreator.createStudentToBeSaved().getFavoriteBookThemes())
                 .totalSpentInBooks(StudentCreator.createStudentToBeSaved().getTotalSpentInBooks())
-                .created(StudentCreator.createStudentToBeSaved().getCreated())
                 .build();
     }
 

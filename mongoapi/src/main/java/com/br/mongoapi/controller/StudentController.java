@@ -5,6 +5,7 @@ import com.br.mongoapi.repository.StudentRepository;
 import com.br.mongoapi.requests.StudentPostRequestBody;
 import com.br.mongoapi.requests.StudentPutRequestBody;
 import com.br.mongoapi.service.StudentService;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springdoc.api.annotations.ParameterObject;
